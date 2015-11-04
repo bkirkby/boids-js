@@ -1,9 +1,9 @@
 # Boids in HTML5
 
-This is intended as a demo for [Skewer][skewer].
+fork of existing project to be used on [Zappos Engineering Blog][engblog]
 
 ## Demo
 
- * http://nullprogram.com/boids-js/
+just open example.html in your browser. jquery is required.
 
-[skewer]: https://github.com/skeeto/skewer-mode
+[engblog]: http://engineering.zappos.com
