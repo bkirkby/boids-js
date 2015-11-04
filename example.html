@@ -4,10 +4,17 @@
     <title>Boids</title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
     <script src="boids.js"></script>
+    <script type="text/javascript">
+      $(document).ready( function() {
+        swarm.createBoids(50);
+      });
+    </script>
   </head>
   <body style="background: darkgray; text-align: center;">
-    <canvas id="canvas" width="640" height="640"
-            style="position: absolute; left: 0; top: 0;">
+    <div style="width: 640px; height: 640px;">
+    <canvas id="boidCanvas" width="640px" height="640px"
+            style="position: static; left: 0; top: 0; width: 640px; height: 640px;">
     </canvas>
+    </div>
   </body>
 </html>
