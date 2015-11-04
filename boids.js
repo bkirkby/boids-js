@@ -175,19 +175,22 @@ function Attractor( sx, sy) {
 
 var destroyBitsFactor = 3.0; //percent of boid.radius to create when destroyed
 var destroySpeedMin = 5;
-var destroySpeedMax = 8;
-var destroyDistanceMin = 30;
-var destroyDistanceMax = 52;
+var destroySpeedMax = 10;
+var destroyDistanceMin = 40;
+var destroyDistanceMax = 92;
+var destroySizeMax = 4;
+var destroySizeMin = 2;
 
 function DestroyBit( boid){ 
-  this.size = Math.random()>.4?1:2;
+  this.size = Math.floor(Math.random() * (destroySizeMax - destroySizeMin + 1)) + destroySizeMin;
+  this.speed = Math.floor( (Math.random() * destroySpeedMax) + destroySpeedMin);
+  this.lifeDistance = Math.floor( (Math.random() * destroyDistanceMax) + destroyDistanceMin);
+
   this.swarm = boid.swarm;
   this.originX = boid.x;
   this.originY = boid.y;
   this.x = boid.x;
   this.y = boid.y;
-  this.speed = Math.floor( (Math.random() * destroySpeedMax) + destroySpeedMin);
-  this.lifeDistance = Math.floor( (Math.random() * destroyDistanceMax) + destroyDistanceMin);
   this.heading = Math.random() * 2 * Math.PI - Math.PI;
   this.color = boid.color;
   this.move = function( swarm) {
@@ -347,23 +350,23 @@ Swarm.prototype.placePatternedBoids = function( num) {
 
 var swarm;
 $(document).ready( function() {
-    var canvas = document.getElementById('boidCanvas');
+    var canvas = document.getElementById('boidsCanvas');
     swarm = new Swarm( canvas.getContext('2d'));
     swarm.id = setInterval( swarm.animate, 33);
     swarm.animate();
     swarm.clear();
 
-    $("#boidCanvas").on("mousemove", function(e) {
+    $("#boidsCanvas").on("mousemove", function(e) {
       swarm.updatePredatorLoc( e.offsetX, e.offsetY);
     });
-    $("#boidCanvas").on("mouseout", function() {
+    $("#boidsCanvas").on("mouseout", function() {
       swarm.predator = null;
       swarm.attractor = null;
     });
-    $("#boidCanvas").on("mousedown", function(e) {
+    $("#boidsCanvas").on("mousedown", function(e) {
       swarm.updateAttractorLoc( e.offsetX, e.offsetY);
     });
-    $("#boidCanvas").on("mouseup", function(e) {
+    $("#boidsCanvas").on("mouseup", function(e) {
       swarm.attractor = null;
       swarm.setDestructionAtPoint( e.offsetX, e.offsetY);
     });
