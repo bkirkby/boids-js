@@ -6,11 +6,11 @@ function Boid(swarm, x, y, color, radius ) {
     this.heading = Math.random() * 2 * Math.PI - Math.PI;
     this.color = color;
     this.radius = radius;
+    this.speed = 12;
 }
 
 Boid.prototype.radialSpeed = Math.PI / 15;
 Boid.prototype.vision = 100;
-Boid.prototype.speed = 12;
 
 Boid.prototype.draw = function(ctx) {
     ctx.beginPath();
@@ -176,8 +176,8 @@ function Attractor( sx, sy) {
 var destroyBitsFactor = 3.0; //percent of boid.radius to create when destroyed
 var destroySpeedMin = 5;
 var destroySpeedMax = 10;
-var destroyDistanceMin = 40;
-var destroyDistanceMax = 92;
+var destroyDistanceMin = 50;
+var destroyDistanceMax = 192;
 var destroySizeMax = 4;
 var destroySizeMin = 2;
 
@@ -258,13 +258,18 @@ function Swarm(ctx) {
 
 
 Swarm.prototype.addPersonal = function() {
+  //find personal
   for( var i = 0; i < this.boids.length; i++ ) {
     if( this.boids[i].isPersonal) {
       return;
     }
   }
-  //this.predator = new Predator( swarm, this.width/2, this.height/2);
-  this.boids.push(new Boid(this, this.width/2, this.height/2, '#00fcff', 11));
+  var pers = new Boid( this, this.width/2, this.height/2, "#00fcff", 11);
+  pers.speed = 0;
+  this.boids.push(pers);
+  window.setTimeout( function() {
+    pers.speed = 13;
+  }, 1000);
 }
 
 Swarm.prototype.createBoids = function(n) {
