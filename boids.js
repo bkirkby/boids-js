@@ -205,7 +205,6 @@ function DestroyBit( boid){
     return true;
   }
   this.draw = function( ctx) {
-    console.log( "destroyBit: "+this.x+","+this.y);
     ctx.fillStyle = this.color;
     ctx.fillRect( this.x, this.y, this.size, this.size);
   }
