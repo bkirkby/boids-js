@@ -255,6 +255,8 @@ function Swarm(ctx) {
   };
 }
 
+Swarm.prototype.defaultBoidSize = 3;
+
 
 Swarm.prototype.addPersonal = function() {
   //find personal
@@ -278,7 +280,7 @@ Swarm.prototype.createBoids = function(n) {
       n = Math.floor(n * ((this.width*this.height)/idealArea));
     }*/
     for (var i = 0; i < n; i++) {
-        this.boids.push(new Boid(this, this.width/2, this.height/2, '#006a6b', 9));
+        this.boids.push(new Boid(this, this.width/2, this.height/2, '#006a6b', this.defaultBoidSize));
     }
 };
 
@@ -352,6 +354,13 @@ Swarm.prototype.placePatternedBoids = function( num) {
   }
 };
 
+var attractorTimeout = function() {
+  if( swarm.attractor != null) {
+    swarm.setDestructionAtPoint( swarm.predator.x, swarm.predator.y);
+    window.setTimeout( attractorTimeout, 1500);
+  }
+}
+
 var swarm;
 $(document).ready( function() {
     var canvas = document.getElementById('boidsCanvas');
@@ -369,9 +378,13 @@ $(document).ready( function() {
     });
     $("#boidsCanvas").on("mousedown", function(e) {
       swarm.updateAttractorLoc( e.offsetX, e.offsetY);
+      window.setTimeout( attractorTimeout, 4000);
     });
     $("#boidsCanvas").on("mouseup", function(e) {
       swarm.attractor = null;
       swarm.setDestructionAtPoint( e.offsetX, e.offsetY);
+    });
+    $("#boidsCanvas").on("mouseup", function(e) { 
+      swarm.attractor = null;
     });
 });
